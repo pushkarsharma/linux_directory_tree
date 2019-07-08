@@ -1,0 +1,24 @@
+#!/usr/bin/python3
+
+import os
+import sys
+
+
+def file_listing(level, path="./"):
+  file_list = os.listdir(path)
+  for entry in file_list:
+    if os.path.isdir(os.path.join(path, entry)):
+      print("-----*"*level + "\033[32m" + entry + "\033[0m")  # \033[32m is for setting print function to print green color here onwards but \033[0m reset the color back to default white
+      file_listing(level+1, os.path.join(path, entry, ""))
+    else:
+      print("-----*"*level + "\033[31m" + entry + "\033[0m")
+      
+      
+if __name__ == '__main__':
+  if len(sys.argv)>1:
+    if  sys.argv[1][-1] == os.sep:
+      file_listing(0, sys.argv[1])
+    else:
+      file_listing(0, sys.argv[1]+os.sep)
+  else:
+    file_listing(0)
